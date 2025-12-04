@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.huggingface/
+.cache/
+wandb/
+mlruns/
+*.bin
+*.pth
+*.safetensors
+*.gguf
+.env
+venv/
+outputs/
