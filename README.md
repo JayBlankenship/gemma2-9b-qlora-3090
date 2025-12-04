@@ -22,6 +22,12 @@ python train.py
 ## Target Performance
 - **Final eval loss**: <1.6
 
+## Expected VRAM Usage
+- Peak VRAM on RTX 3090: ~22–23 GB
+
+## Loss Curve
+![Training Loss Curve](loss_curve_placeholder.png)
+
 ## Inference After Training
 Run the merge and inference script to merge LoRA weights and launch a Gradio chat demo:
 ```bash
