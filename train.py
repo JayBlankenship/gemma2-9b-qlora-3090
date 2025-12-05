@@ -26,7 +26,6 @@ torch.backends.cudnn.allow_tf32 = True
 # Model and dataset configuration
 MODEL_NAME = "google/gemma-2-9b"
 DATASET_NAME = "tatsu-lab/alpaca"
-MAX_SEQ_LENGTH = 512
 NUM_TRAIN_EXAMPLES = 5000
 NUM_EVAL_EXAMPLES = 500
 
@@ -167,7 +166,6 @@ def main():
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
-        max_seq_length=MAX_SEQ_LENGTH,
         peft_config=lora_config,
         callbacks=[vram_callback],
     )
