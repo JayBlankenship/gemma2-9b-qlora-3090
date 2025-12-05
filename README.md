@@ -9,11 +9,13 @@ Fine-tune Google's Gemma-2-9B model using QLoRA on Alpaca dataset subset for eff
 
 ## Quick Start
 ```bash
+# Request access to Gemma-2-9B at https://huggingface.co/google/gemma-2-9b (agree to terms)
+
+# Create .env file with your Hugging Face token
+echo "HF_TOKEN=hf_..." > .env
+
 # Install dependencies
 pip install -r requirements.txt
-
-# Login to Hugging Face
-huggingface-cli login
 
 # Train the model
 python train.py

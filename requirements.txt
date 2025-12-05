@@ -1,4 +1,4 @@
-torch==2.4.0
+torch==2.4.1
 transformers>=4.42.0
 accelerate>=0.33.0
 peft>=0.11.0
@@ -8,5 +8,6 @@ datasets
 gradio
 mlflow
 sentencepiece
-protobuf
+protobuf>=3.20.2,<6.0.0.dev0
+python-dotenv
 wandb  # optional for logging

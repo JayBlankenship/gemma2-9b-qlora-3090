@@ -2,6 +2,11 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from peft import PeftModel
 import gradio as gr
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
 
 # Configuration
 BASE_MODEL_NAME = "google/gemma-2-9b"
@@ -71,6 +76,11 @@ def create_gradio_interface(model, tokenizer):
     return demo
 
 def main():
+    # Set Hugging Face token from .env
+    hf_token = os.getenv("HF_TOKEN")
+    if hf_token:
+        os.environ["HF_TOKEN"] = hf_token
+
     model, tokenizer = load_and_merge_model()
     
     demo = create_gradio_interface(model, tokenizer)

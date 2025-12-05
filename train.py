@@ -13,6 +13,10 @@ from trl import SFTTrainer
 from datasets import load_dataset
 import mlflow
 import mlflow.pytorch
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Set environment variables for reproducibility
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:512"
@@ -116,6 +120,11 @@ def load_and_prepare_dataset(tokenizer):
     return train_dataset, eval_dataset
 
 def main():
+    # Set Hugging Face token from .env
+    hf_token = os.getenv("HF_TOKEN")
+    if hf_token:
+        os.environ["HF_TOKEN"] = hf_token
+
     # Start MLflow run
     mlflow.start_run(run_name="gemma2-9b-qlora-finetune")
 
