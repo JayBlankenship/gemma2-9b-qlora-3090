@@ -14,6 +14,13 @@ from datasets import load_dataset
 import mlflow
 import mlflow.pytorch
 from dotenv import load_dotenv
+import warnings
+
+# Set CUDA device before any torch operations
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
+# Suppress deprecation warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Load environment variables
 load_dotenv()
@@ -118,6 +125,15 @@ def load_and_prepare_dataset(tokenizer):
     return train_dataset, eval_dataset
 
 def main():
+    # Check CUDA availability
+    print(f"CUDA available: {torch.cuda.is_available()}")
+    if torch.cuda.is_available():
+        print(f"CUDA device: {torch.cuda.get_device_name(0)}")
+        print(f"CUDA memory: {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f} GB")
+    else:
+        print("CUDA not available. Ensure PyTorch with CUDA is installed: pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121")
+        return
+
     # Set Hugging Face token from .env
     hf_token = os.getenv("HF_TOKEN")
     if hf_token:
