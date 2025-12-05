@@ -100,8 +100,8 @@ def load_and_prepare_dataset(tokenizer):
     train_dataset = dataset.select(range(NUM_TRAIN_EXAMPLES))
     eval_dataset = dataset.select(range(NUM_TRAIN_EXAMPLES, len(dataset)))
 
-    def tokenize_function(examples):
-        # Format as instruction-response
+    def format_function(examples):
+        # Format as instruction-response for SFTTrainer
         texts = []
         for instruction, input_text, output in zip(
             examples["instruction"], examples["input"], examples["output"]
@@ -111,11 +111,10 @@ def load_and_prepare_dataset(tokenizer):
             else:
                 text = f"Instruction: {instruction}\nResponse: {output}"
             texts.append(text)
+        return {"text": texts}
 
-        return tokenizer(texts, truncation=True, padding="max_length", max_length=MAX_SEQ_LENGTH)
-
-    train_dataset = train_dataset.map(tokenize_function, batched=True, remove_columns=dataset.column_names)
-    eval_dataset = eval_dataset.map(tokenize_function, batched=True, remove_columns=dataset.column_names)
+    train_dataset = train_dataset.map(format_function, batched=True, remove_columns=dataset.column_names)
+    eval_dataset = eval_dataset.map(format_function, batched=True, remove_columns=dataset.column_names)
 
     return train_dataset, eval_dataset
 
@@ -168,12 +167,13 @@ def main():
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
+        max_seq_length=MAX_SEQ_LENGTH,
         peft_config=lora_config,
         callbacks=[vram_callback],
     )
 
-    # Compile model for faster training
-    trainer.model = torch.compile(trainer.model, mode="reduce-overhead")
+    # Compile model for faster training (disabled for debugging)
+    # trainer.model = torch.compile(trainer.model, mode="reduce-overhead")
 
     # Train
     trainer.train()
