@@ -53,7 +53,7 @@ def generate_response(message, model, tokenizer, max_length=512, temperature=0.7
     with torch.no_grad():
         outputs = model.generate(
             **inputs,
-            max_new_tokens=50,  # Reduced for faster response
+            max_new_tokens=500,  # Increased for longer responses
             eos_token_id=tokenizer.eos_token_id,
             pad_token_id=tokenizer.pad_token_id,
             temperature=temperature,
