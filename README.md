@@ -30,8 +30,33 @@ python train.py
 ## Loss Curve
 ![Training Loss Curve](loss_curve_placeholder.png)
 
-## Inference After Training
-Run the merge and inference script to merge LoRA weights and launch a Gradio chat demo:
+## Inference Options
+
+After training, choose from these working inference interfaces:
+
+### CLI Chat (Recommended)
+Simple command-line interface for chatting:
 ```bash
-python merge_and_inference.py
+python cli_inference.py
 ```
+- Fast and reliable
+- Type messages and get responses
+- Type 'quit' or 'exit' to stop
+
+### Streamlit Chat with History
+Full chat interface with conversation history:
+```bash
+pip install streamlit  # if not installed
+streamlit run streamlit_chat.py
+```
+- Web-based chat with persistent history
+- Open the provided URL in your browser
+
+### Streamlit Single-Turn
+Simple web interface for single messages:
+```bash
+pip install streamlit  # if not installed
+streamlit run streamlit_inference.py
+```
+- Web-based input/output
+- No history, just quick responses
